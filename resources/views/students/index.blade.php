@@ -1,91 +1,72 @@
 @extends('students.layouts')
 
 @section('content')
-
 <div class="row justify-content-center mt-3">
-    <div class="col-md-8">
+    <div class="col-md-12">
 
         @if ($message = Session::get('success'))
-        <div class="alert alert-success" role="alert">
-            {{ $message }}
-        </div>
+            <div class="alert alert-success" role="alert">
+                {{ $message }}
+            </div>
         @endif
 
         <div class="card">
-            <div class="card-header">
-                <div class="float-start">
-                    Modificar estudiante
-                </div>
-                <div class="float-end">
-                    <a href="{{ route('students.index') }}" class="btn btn-primary btn-sm">&larr; Atras</a>
-                </div>
-            </div>
+            <div class="card-header">Students List</div>
             <div class="card-body">
-                <form action="{{ route('students.update', $student->id) }}" method="post">
-                    @csrf
-                    @method("PUT")
+                <a href="{{ route('students.create') }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Student</a>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">DNI</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Birthday</th>
+                        <th scope="col">Group</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($students as $student)
+                        <tr>
+                            <th scope="row">{{ $student->id }}</th>
+                            <td>{{ $student->dni_student }}</td>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->last_name }}</td>
+                            <td>{{ $student->birthday }}</td>
+                            <td>{{ $student->group_student }}</td>
+                            <td>
+                                <form action="{{ route('students.destroy', $student->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
 
-                    <div class="mb-3 row">
-                        <label for="name" class="col-md-4 col-form-label text-md-end text-start">Nombre</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $student->name }}">
-                            @if ($errors->has('name'))
-                            <span class="text-danger">{{ $errors->first('name') }}</span>
-                            @endif
-                        </div>
-                    </div>
+                                    <a href="{{ route('students.show', $student->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
 
-                    <div class="mb-3 row">
-                        <label for="last_name" class="col-md-4 col-form-label text-md-end text-start">Apellido</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" value="{{ $student->last_name }}">
-                            @if ($errors->has('last_name'))
-                            <span class="text-danger">{{ $errors->first('last_name') }}</span>
-                            @endif
-                        </div>
-                    </div>
+                                    <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>   
 
-                    <div class="mb-3 row">
-                        <label for="dni" class="col-md-4 col-form-label text-md-end text-start">DNI</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control @error('dni') is-invalid @enderror" id="dni" name="dni" value="{{ $student->dni }}">
-                            @if ($errors->has('dni'))
-                            <span class="text-danger">{{ $errors->first('dni') }}</span>
-                            @endif
-                        </div>
-                    </div>
+                                    <a href="{{route('student.assists', $student->id)}}" class="btn btn-success btn-sm"><i class="bi bi-eye"></i> Assists</a>
 
-                    <div class="mb-3 row">
-                        <label for="birthday" class="col-md-4 col-form-label text-md-end text-start">Fecha de nacimiento</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control @error('birthday') is-invalid @enderror" id="birthday" name="birthday" value="{{ $student->birthday}}">
-                            @if ($errors->has('birthday'))
-                            <span class="text-danger">{{ $errors->first('birthday') }}</span>
-                            @endif
-                        </div>
-                    </div>
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this student?');"><i class="bi bi-trash"></i> Delete</button>
 
-                    <div class="mb-3 row">
-                        <label for="group" class="col-md-4 col-form-label text-md-end text-start">Grupo</label>
-                        <div class="col-md-6">
-                            <select name="group">
-                                <option value="A" {{ $student->group === 'A' ? 'selected' : '' }}>A</option>
-                                <option value="B" {{ $student->group === 'B' ? 'selected' : '' }}>B</option>
-                            </select></label>
-                            @if ($errors->has('group'))
-                            <span class="text-danger">{{ $errors->first('group') }}</span>
-                            @endif
-                        </div>
-                    </div>
+                                    
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                            <td colspan="6">
+                                <span class="text-danger">
+                                    <strong>No Student Found!</strong>
+                                </span>
+                            </td>
+                        @endforelse
+                    </tbody>
+                  </table>
 
-                    <div class="mb-3 row">
-                        <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Modificar">
-                    </div>
+                  {{ $students->links() }}
 
-                </form>
             </div>
         </div>
-    </div>
+    </div>    
 </div>
-
+    
 @endsection

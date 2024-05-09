@@ -20,6 +20,7 @@ class StudentFactory extends Factory
             'name' => fake()->name(),
             'last_name' => fake()->lastName(),
             'dni' => fake()->randomNumber(8, false),
+            'assists' => $this->faker->numberBetween(0, 30),
             'birthday' => fake()->date(),
             'group' => fake()->randomElement(['A', 'B'])
         ];

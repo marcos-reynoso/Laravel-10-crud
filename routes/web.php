@@ -20,3 +20,4 @@ Route::get('/', function () {
 });
 Route::resource('products', ProductController::class);
 Route::resource('students', StudentController::class);
+Route::get('/student/assists/{id}', [StudentController::class, 'getAssists'])->name('student.assists');

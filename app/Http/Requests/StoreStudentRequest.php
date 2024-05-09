@@ -25,6 +25,7 @@ class StoreStudentRequest extends FormRequest
             'name' => 'required|string|max:20',
             'last_name' => 'required|string|max:20',
             'dni' => 'required|integer|unique:students,dni',
+            'assists' => 'integer|min:0|max:10000',
             'birthday' => 'required',
             'group' => 'required'
         ];
