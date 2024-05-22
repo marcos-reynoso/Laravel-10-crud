@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 
 class StudentController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         return view('students.index', [
             'students' => Student::latest()->paginate(10)
         ]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('students.create');
     }
@@ -26,8 +27,14 @@ class StudentController extends Controller
         return redirect()->route('students.index')
             ->withSuccess('New students is added successfully.');
     }
+    public function show(Student $student): View
+    {
+        return view('students.show', [
+            'student' => $student
+        ]);
+    }
 
-    public function edit(Student $student)
+    public function edit(Student $student): View
     {
         return view('students.edit', [
             'student' => $student
@@ -46,16 +53,5 @@ class StudentController extends Controller
         $student->delete();
         return redirect()->route('students.index')
             ->withSuccess('Student is delete successfully .');
-    }
-    public function getAssists($id)
-    {
-        $student = Student::findOrFail($id);
-        $cant = $student->assists()->count();
-        $assists = $student->assists;
-        return view('student.assists', [
-            'student' => $student,
-            'cant' => $cant,
-            'assists' => $assists
-        ]);
     }
 }

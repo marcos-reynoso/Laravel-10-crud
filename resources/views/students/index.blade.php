@@ -30,11 +30,11 @@
                         @forelse ($students as $student)
                         <tr>
                             <th scope="row">{{ $student->id }}</th>
-                            <td>{{ $student->dni_student }}</td>
+                            <td>{{ $student->dni }}</td>
                             <td>{{ $student->name }}</td>
                             <td>{{ $student->last_name }}</td>
                             <td>{{ $student->birthday }}</td>
-                            <td>{{ $student->group_student }}</td>
+                            <td>{{ $student->group }}</td>
                             <td>
                                 <form action="{{ route('students.destroy', $student->id) }}" method="post">
                                     @csrf
@@ -43,8 +43,6 @@
                                     <a href="{{ route('students.show', $student->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
 
                                     <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>   
-
-                                    <a href="{{route('student.assists', $student->id)}}" class="btn btn-success btn-sm"><i class="bi bi-eye"></i> Assists</a>
 
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this student?');"><i class="bi bi-trash"></i> Delete</button>
 

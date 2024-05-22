@@ -31,11 +31,11 @@
                         <?php $__empty_1 = true; $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr>
                             <th scope="row"><?php echo e($student->id); ?></th>
-                            <td><?php echo e($student->dni_student); ?></td>
+                            <td><?php echo e($student->dni); ?></td>
                             <td><?php echo e($student->name); ?></td>
                             <td><?php echo e($student->last_name); ?></td>
                             <td><?php echo e($student->birthday); ?></td>
-                            <td><?php echo e($student->group_student); ?></td>
+                            <td><?php echo e($student->group); ?></td>
                             <td>
                                 <form action="<?php echo e(route('students.destroy', $student->id)); ?>" method="post">
                                     <?php echo csrf_field(); ?>
@@ -44,8 +44,6 @@
                                     <a href="<?php echo e(route('students.show', $student->id)); ?>" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
 
                                     <a href="<?php echo e(route('students.edit', $student->id)); ?>" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>   
-
-                                    <a href="<?php echo e(route('student.assists', $student->id)); ?>" class="btn btn-success btn-sm"><i class="bi bi-eye"></i> Assists</a>
 
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this student?');"><i class="bi bi-trash"></i> Delete</button>
 
